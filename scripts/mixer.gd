@@ -1,14 +1,17 @@
+### Authored by Dawn2Dusk
+### Class that handles the main scene
 extends Node2D
 
-## connections
+## Connections
 @export var importer: Importer
 @export var import_list: ImportBuilder
 @export var path: LineEdit
 @export var volume: HSlider
 
-## fields
+## Fields
 var list: PackedStringArray
 
+## Initialize the volume
 func _ready() -> void:
 	AudioServer.set_bus_volume_linear(0, volume.value / 100)
 
@@ -22,6 +25,6 @@ func _on_import_pressed() -> void:
 	if list.size() > 0:
 		import_list.create_list(list)
 
-## Update the volume of the mixer
+## Update the volume of the main bus
 func volume_changed(value: float) -> void:
 	AudioServer.set_bus_volume_linear(0, value / 100)

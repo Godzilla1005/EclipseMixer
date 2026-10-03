@@ -1,9 +1,11 @@
+### Authored by Dawn2Dusk
+### Abstract Class that allows the dynamic creation of ListElements
 @abstract class_name ListBuilder extends Control
 
-## element to add
+## Element to Add
 @export var element_scene: PackedScene
 
-## list variables
+## List Variables
 var list_elements: Array[ListElement]
 
 ## Initializes the creation of a list from a given PackedStringArray
@@ -49,4 +51,5 @@ func clear_list():
 	# reset the list
 	list_elements.clear()
 
+## @abstract: Implementations of this class should handle setup independently
 @abstract func _setup_element(element: ListElement, file: String)
