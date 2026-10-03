@@ -1,0 +1,111 @@
+class_name Playlist extends Node
+
+enum PlayMode {
+	NONE,
+	PLAY,
+	SHUFFLE
+}
+
+## connections
+@export var audio_player: AudioPlayer
+@export var elements: PlaylistBuilder
+@export var importer: Importer
+@export var preset: PackedScene
+@export var preset_list: Control
+
+## playlist fields
+var playing_index: int = 0
+var playing: bool = false
+var play_mode: PlayMode = PlayMode.NONE
+var current_song: AudioStreamMP3
+var file_access: FileAccess
+
+
+## Play straight through the playlist
+func play():
+	playing = true
+	play_mode = PlayMode.PLAY
+	audio_player.play_song(elements.get_child(0).full_path)
+
+## Attempt to play a random song
+func shuffle():
+	playing = true
+	play_mode = PlayMode.SHUFFLE
+	audio_player.play_song(elements.get_child(randi_range(0, elements.get_child_count() - 1)).full_path)
+
+func play_single(element: PlaylistElement):
+	playing = true
+	play_mode = PlayMode.NONE
+	audio_player.play_song(element.full_path)
+
+## Stop the currently playing song
+func stop():
+	audio_player.stop()
+	playing = false
+	play_mode = PlayMode.NONE
+
+## Tells the playlist to add a song
+func add_to_playlist(file: String, path: String):
+	var element: PlaylistElement = elements.add_to_list(file)
+	element.setup(file, path)
+	element.connect_signals(self)
+	element.element_index = elements.get_child_count() - 1
+
+## Removes the passed element from the playlist and frees the node
+func remove_from_playlist(element: PlaylistElement):
+	#element.queue_free()
+	elements.remove_by_file(element.file_name)
+	
+	for i: int in range(elements.get_child_count()):
+		elements.get_child(i).element_index = i
+
+## Moves a song higher in the order
+func reorder_up(element: PlaylistElement):
+	## Check the current index
+	var current_index: int = element.element_index
+	if current_index == 0: return
+	
+	## Reorder the components and update their indices
+	elements.move_child(element, current_index - 1)
+	element.element_index = current_index - 1
+	elements.get_child(current_index).element_index = current_index
+
+## Moves a song lower in the order
+func reorder_down(element: PlaylistElement):
+	## Check the current index
+	var current_index: int = element.element_index
+	if current_index == elements.get_child_count() - 1: return
+	
+	## Reorder the components and update their indices
+	elements.move_child(element, current_index + 1)
+	element.element_index = current_index + 1
+	elements.get_child(current_index).element_index = current_index
+
+## Triggered when the currently playing song is finished
+func player_finished() -> void:
+	if !playing or elements.get_child_count() == 0: 
+		stop()
+		return
+	match play_mode:
+		PlayMode.NONE:
+			return
+		PlayMode.PLAY:
+			playing_index = playing_index + 1 if playing_index < elements.get_child_count() - 1 else 0
+			audio_player.play_song(elements.get_child(playing_index).full_path)
+		PlayMode.SHUFFLE:
+			playing_index = randi_range(0, elements.get_child_count() - 1)
+			audio_player.play_song(elements.get_child(playing_index).full_path)
+	return
+
+func save_playlist():
+	var new_preset: PlaylistPreset = preset.instantiate()
+	var temp_array: PackedStringArray
+	for element: PlaylistElement in elements.get_children():
+		temp_array.append(element.file_name)
+	if temp_array.size() <= 0: return
+	
+	preset_list.add_child(new_preset)
+	new_preset.setup_list(temp_array, self, importer, "New Preset")
+
+func clear_playlist():
+	elements.clear_list()

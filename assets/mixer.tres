@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://l3j6aywwnjdh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[resource]
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_g4v7s")

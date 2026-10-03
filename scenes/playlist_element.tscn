@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://dlfk1lsujqyog"]
+
+[ext_resource type="Script" uid="uid://co027pbgl54gr" path="res://scripts/playlist_element.gd" id="1_jqujq"]
+
+[node name="PlaylistElement" type="Control" unique_id=1619880947 node_paths=PackedStringArray("element_name")]
+custom_minimum_size = Vector2(450, 70)
+custom_maximum_size = Vector2(450, 70)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1470.0
+offset_bottom = -1010.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jqujq")
+element_name = NodePath("HB_Content/Text_FileName")
+
+[node name="BG" type="ColorRect" parent="." unique_id=1005757416]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.39924997, 0.5, 0.345, 1)
+
+[node name="HB_Content" type="HBoxContainer" parent="." unique_id=1798253443]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VB_Rearrange" type="VBoxContainer" parent="HB_Content" unique_id=1345545937]
+custom_minimum_size = Vector2(35, 70)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Button_Up" type="Control" parent="HB_Content/VB_Rearrange" unique_id=1985882042]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+
+[node name="Up" type="Button" parent="HB_Content/VB_Rearrange/Button_Up" unique_id=327503754]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 30.0
+offset_bottom = 30.0
+
+[node name="Button_Down" type="Control" parent="HB_Content/VB_Rearrange" unique_id=2105703552]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Down" type="Button" parent="HB_Content/VB_Rearrange/Button_Down" unique_id=1482370874]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 30.0
+offset_bottom = 30.0
+
+[node name="Button_Play" type="Control" parent="HB_Content" unique_id=1571245949]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Play" type="Button" parent="HB_Content/Button_Play" unique_id=1404534691]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[node name="Text_FileName" type="RichTextLabel" parent="HB_Content" unique_id=1713457250]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Blank"
+vertical_alignment = 1
+
+[node name="Button_Remove" type="Control" parent="HB_Content" unique_id=409615288]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Remove" type="Button" parent="HB_Content/Button_Remove" unique_id=548487230]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[connection signal="pressed" from="HB_Content/VB_Rearrange/Button_Up/Up" to="." method="call_move_up"]
+[connection signal="pressed" from="HB_Content/VB_Rearrange/Button_Down/Down" to="." method="call_move_down"]
+[connection signal="pressed" from="HB_Content/Button_Play/Play" to="." method="call_play"]
+[connection signal="pressed" from="HB_Content/Button_Remove/Remove" to="." method="call_remove_element"]

@@ -1,0 +1,334 @@
+[gd_scene format=3 uid="uid://dj206wh6kxj7l"]
+
+[ext_resource type="Theme" uid="uid://l3j6aywwnjdh" path="res://assets/mixer.tres" id="1_6yyi0"]
+[ext_resource type="Script" uid="uid://dr2oal5f7at2g" path="res://scripts/importer.gd" id="1_pef7k"]
+[ext_resource type="Script" uid="uid://bjjlngh6w3l4" path="res://scripts/mixer.gd" id="1_xmiak"]
+[ext_resource type="PackedScene" uid="uid://btshv4ljb5i7d" path="res://scenes/playlist_preset.tscn" id="3_5ldx1"]
+[ext_resource type="PackedScene" uid="uid://bw30uay7r05if" path="res://scenes/import_element.tscn" id="3_nne17"]
+[ext_resource type="Script" uid="uid://dp150e5gnfgk6" path="res://scripts/playlist.gd" id="4_2mcqu"]
+[ext_resource type="Script" uid="uid://rp1h4wrl64xb" path="res://scripts/audio_player.gd" id="5_5o4dq"]
+[ext_resource type="PackedScene" uid="uid://dlfk1lsujqyog" path="res://scenes/playlist_element.tscn" id="5_jf88f"]
+[ext_resource type="Script" uid="uid://0eteiw50xpsn" path="res://scripts/playlist_builder.gd" id="7_53krk"]
+[ext_resource type="Script" uid="uid://dgp6gccellmb0" path="res://scripts/import_builder.gd" id="8_5o4dq"]
+
+[node name="Mixer" type="Node2D" unique_id=130639049 node_paths=PackedStringArray("importer", "import_list", "path", "volume")]
+script = ExtResource("1_xmiak")
+importer = NodePath("Importer")
+import_list = NodePath("CanvasLayer/ImportList/Import_Scroll/VB_ImportList")
+path = NodePath("CanvasLayer/MixBoard/VB/HB_Import/LineEdit_Path/Path")
+volume = NodePath("CanvasLayer/MixBoard/VB/Volume/HSlide_Volume")
+
+[node name="Importer" type="Node" parent="." unique_id=376679402 node_paths=PackedStringArray("preset_list", "playlist")]
+script = ExtResource("1_pef7k")
+playlist_preset = ExtResource("3_5ldx1")
+preset_list = NodePath("../CanvasLayer/ImportList/Preset_Scroll/VB_PresetList")
+playlist = NodePath("../CanvasLayer/Playlist")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1383380155]
+
+[node name="BG" type="ColorRect" parent="CanvasLayer" unique_id=1718147847]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+color = Color(0.25365332, 0.41, 0.2296, 1)
+
+[node name="MixBoard" type="Control" parent="CanvasLayer" unique_id=1348228800]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 90.0
+offset_top = 30.0
+offset_right = 590.0
+offset_bottom = 250.0
+
+[node name="BG" type="ColorRect" parent="CanvasLayer/MixBoard" unique_id=963553311]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+color = Color(0.520325, 0.65, 0.5135, 1)
+
+[node name="VB" type="VBoxContainer" parent="CanvasLayer/MixBoard" unique_id=2011621467]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HB_Import" type="HBoxContainer" parent="CanvasLayer/MixBoard/VB" unique_id=1455770433]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Spacer" type="Control" parent="CanvasLayer/MixBoard/VB/HB_Import" unique_id=299623553]
+layout_mode = 2
+
+[node name="Button_Import" type="Control" parent="CanvasLayer/MixBoard/VB/HB_Import" unique_id=758926880]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="Import" type="Button" parent="CanvasLayer/MixBoard/VB/HB_Import/Button_Import" unique_id=1225377667]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Import"
+
+[node name="LineEdit_Path" type="Control" parent="CanvasLayer/MixBoard/VB/HB_Import" unique_id=947620205]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Path" type="LineEdit" parent="CanvasLayer/MixBoard/VB/HB_Import/LineEdit_Path" unique_id=1813704952]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer" type="Control" parent="CanvasLayer/MixBoard/VB" unique_id=1537168036]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Volume" type="Control" parent="CanvasLayer/MixBoard/VB" unique_id=255115446]
+custom_minimum_size = Vector2(450, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HSlide_Volume" type="HSlider" parent="CanvasLayer/MixBoard/VB/Volume" unique_id=934489972]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+
+[node name="Playlist" type="Control" parent="CanvasLayer" unique_id=1076350065 node_paths=PackedStringArray("audio_player", "elements", "importer", "preset_list")]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 90.0
+offset_top = -815.0
+offset_right = 590.0
+offset_bottom = -30.0
+grow_vertical = 0
+script = ExtResource("4_2mcqu")
+audio_player = NodePath("AudioPlayer")
+elements = NodePath("VB_Playlist/Playlist_Scroll/VB_PlaylistContents")
+importer = NodePath("../../Importer")
+preset = ExtResource("3_5ldx1")
+preset_list = NodePath("../ImportList/Preset_Scroll/VB_PresetList")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Playlist" unique_id=1342304990 node_paths=PackedStringArray("playlist", "audio_player")]
+script = ExtResource("5_5o4dq")
+playlist = NodePath("..")
+audio_player = NodePath(".")
+
+[node name="BG" type="ColorRect" parent="CanvasLayer/Playlist" unique_id=117749915]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+color = Color(0.520325, 0.65, 0.5135, 1)
+
+[node name="VB_Playlist" type="VBoxContainer" parent="CanvasLayer/Playlist" unique_id=546174875]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=182187118]
+layout_mode = 2
+
+[node name="HB_Playing" type="HBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=1555665742]
+layout_mode = 2
+theme_override_constants/separation = 9
+alignment = 1
+
+[node name="Button_PlayForward" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing" unique_id=1426405738]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="PlayForward" type="Button" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_PlayForward" unique_id=1951600653]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Play"
+
+[node name="Button_PlayShuffle" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing" unique_id=964940499]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="PlayShuffle" type="Button" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_PlayShuffle" unique_id=39350977]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Shuffle"
+
+[node name="Button_Stop" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing" unique_id=1092081077]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="Stop" type="Button" parent="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_Stop" unique_id=649934030]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Stop"
+
+[node name="Playlist_Scroll" type="ScrollContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=79240564]
+custom_minimum_size = Vector2(0, 580)
+layout_mode = 2
+
+[node name="VB_PlaylistContents" type="VBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist/Playlist_Scroll" unique_id=1806710888]
+custom_minimum_size = Vector2(500, 580)
+layout_mode = 2
+script = ExtResource("7_53krk")
+element_scene = ExtResource("5_jf88f")
+
+[node name="HB_PlaylistSettings" type="HBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=209835939]
+layout_mode = 2
+alignment = 1
+
+[node name="Button_Save" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings" unique_id=512128106]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="Save" type="Button" parent="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings/Button_Save" unique_id=1776031749]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Save"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings" unique_id=394991834]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Button_Clear" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings" unique_id=1346818347]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_6yyi0")
+
+[node name="Clear" type="Button" parent="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings/Button_Clear" unique_id=1028398220]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+text = "Clear"
+
+[node name="ImportList" type="Control" parent="CanvasLayer" unique_id=213536968]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1090.0
+offset_top = -500.0
+offset_right = -90.0
+offset_bottom = 500.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="CanvasLayer/ImportList" unique_id=1448352599]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6yyi0")
+color = Color(0.62906003, 0.71, 0.62479997, 1)
+
+[node name="Import_Scroll" type="ScrollContainer" parent="CanvasLayer/ImportList" unique_id=355126258]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -480.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VB_ImportList" type="VBoxContainer" parent="CanvasLayer/ImportList/Import_Scroll" unique_id=1223334275 node_paths=PackedStringArray("importer", "playlist")]
+custom_minimum_size = Vector2(500, 1000)
+layout_mode = 2
+script = ExtResource("8_5o4dq")
+importer = NodePath("../../../../Importer")
+playlist = NodePath("../../../Playlist")
+element_scene = ExtResource("3_nne17")
+
+[node name="Preset_Scroll" type="ScrollContainer" parent="CanvasLayer/ImportList" unique_id=729975148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 530.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VB_PresetList" type="VBoxContainer" parent="CanvasLayer/ImportList/Preset_Scroll" unique_id=1129955526]
+custom_minimum_size = Vector2(450, 1000)
+layout_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/MixBoard/VB/HB_Import/Button_Import/Import" to="." method="_on_import_pressed"]
+[connection signal="value_changed" from="CanvasLayer/MixBoard/VB/Volume/HSlide_Volume" to="." method="volume_changed"]
+[connection signal="finished" from="CanvasLayer/Playlist/AudioPlayer" to="CanvasLayer/Playlist" method="player_finished"]
+[connection signal="pressed" from="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_PlayForward/PlayForward" to="CanvasLayer/Playlist" method="play"]
+[connection signal="pressed" from="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_PlayShuffle/PlayShuffle" to="CanvasLayer/Playlist" method="shuffle"]
+[connection signal="pressed" from="CanvasLayer/Playlist/VB_Playlist/HB_Playing/Button_Stop/Stop" to="CanvasLayer/Playlist" method="stop"]
+[connection signal="pressed" from="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings/Button_Save/Save" to="CanvasLayer/Playlist" method="save_playlist"]
+[connection signal="pressed" from="CanvasLayer/Playlist/VB_Playlist/HB_PlaylistSettings/Button_Clear/Clear" to="CanvasLayer/Playlist" method="clear_playlist"]

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bw30uay7r05if"]
+
+[ext_resource type="Script" uid="uid://dvpamm5c4hp48" path="res://scripts/import_element.gd" id="1_vlf8o"]
+
+[node name="ImportElement" type="Control" unique_id=1619880947 node_paths=PackedStringArray("element_name")]
+custom_minimum_size = Vector2(500, 70)
+custom_maximum_size = Vector2(500, 70)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1420.0
+offset_bottom = -1010.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vlf8o")
+element_name = NodePath("HB_Content/Text_FileName")
+
+[node name="BG" type="ColorRect" parent="." unique_id=1791769489]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.39924997, 0.5, 0.345, 1)
+
+[node name="HB_Content" type="HBoxContainer" parent="." unique_id=1177809253]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_Add" type="Control" parent="HB_Content" unique_id=531048578]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Add" type="Button" parent="HB_Content/Button_Add" unique_id=1084050508]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[node name="Text_FileName" type="RichTextLabel" parent="HB_Content" unique_id=519404623]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+text = "Blank"
+vertical_alignment = 1
+
+[connection signal="pressed" from="HB_Content/Button_Add/Add" to="." method="call_add_pressed"]

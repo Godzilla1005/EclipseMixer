@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://btshv4ljb5i7d"]
+
+[ext_resource type="Script" uid="uid://b88fodvi2tphy" path="res://scripts/playlist_preset.gd" id="1_sdjax"]
+[ext_resource type="Theme" uid="uid://l3j6aywwnjdh" path="res://assets/mixer.tres" id="2_dnk6i"]
+
+[node name="PlaylistPreset" type="Control" unique_id=429569754 node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(450, 70)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1470.0
+offset_bottom = -1010.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sdjax")
+label = NodePath("HB_Content/Text_PresetName")
+
+[node name="BG" type="ColorRect" parent="." unique_id=1739942974]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.39924997, 0.5, 0.345, 1)
+
+[node name="HB_Content" type="HBoxContainer" parent="." unique_id=436432290]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_Add" type="Control" parent="HB_Content" unique_id=1813898766]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Add" type="Button" parent="HB_Content/Button_Add" unique_id=126019750]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[node name="Text_PresetName" type="LineEdit" parent="HB_Content" unique_id=168050931]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme = ExtResource("2_dnk6i")
+text = "Blank"
+
+[node name="Button_Remove" type="Control" parent="HB_Content" unique_id=2003402358]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Remove" type="Button" parent="HB_Content/Button_Remove" unique_id=2056733948]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[connection signal="pressed" from="HB_Content/Button_Add/Add" to="." method="load_playlist"]
+[connection signal="pressed" from="HB_Content/Button_Remove/Remove" to="." method="delete_preset"]
