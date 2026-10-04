@@ -6,7 +6,7 @@ class_name Playlist extends Node
 enum PlayMode {
 	NONE,
 	PLAY,
-	SHUFFLE
+	SHUFFLE,
 }
 
 ## Connections

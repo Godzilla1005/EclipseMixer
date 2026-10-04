@@ -7,6 +7,8 @@ extends Node2D
 @export var import_list: ImportBuilder
 @export var path: LineEdit
 @export var volume: HSlider
+@export var preset_list: VBoxContainer
+@export var playlist_list: PlaylistBuilder
 
 ## Fields
 var list: PackedStringArray
@@ -17,10 +19,13 @@ func _ready() -> void:
 
 ## Attempt to import files
 func _on_import_pressed() -> void:
-	# reset list
+	## reset lists
 	import_list.clear_list()
+	playlist_list.clear_list()
+	for child in preset_list.get_children():
+		child.queue_free()
 	
-	# attempt to generate new import list
+	## attempt to generate new import list
 	list = importer.try_import(path.text)
 	if list.size() > 0:
 		import_list.create_list(list)

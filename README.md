@@ -9,6 +9,9 @@ Put the full file path of the folder with the music you want to use in the box n
 Elements added to the playlist can be rearranged, removed, or played individually. The entire playlist can be played through straight or randomly.
 The current playlist can be saved as a preset that is re-nameable.
 
+## Plans
+- Graphical Overhaul
+- Previous/Next Functions
+
 ## Known Issues
-- When removing a song from the playlist, there is a chance that multiple elements will be removed
-- When re-importing, existing presets are not removed. This can lead to issues if attempting to load them if files or directories are renamed or otherwise changed. This includes changing the primary import path
+- When removing a song from the playlist, there is a chance that multiple elements will be removed (particularly noticeable with duplicates)

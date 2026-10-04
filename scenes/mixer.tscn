@@ -11,12 +11,14 @@
 [ext_resource type="Script" uid="uid://0eteiw50xpsn" path="res://scripts/playlist_builder.gd" id="7_53krk"]
 [ext_resource type="Script" uid="uid://dgp6gccellmb0" path="res://scripts/import_builder.gd" id="8_5o4dq"]
 
-[node name="Mixer" type="Node2D" unique_id=130639049 node_paths=PackedStringArray("importer", "import_list", "path", "volume")]
+[node name="Mixer" type="Node2D" unique_id=130639049 node_paths=PackedStringArray("importer", "import_list", "path", "volume", "preset_list", "playlist_list")]
 script = ExtResource("1_xmiak")
 importer = NodePath("Importer")
 import_list = NodePath("CanvasLayer/ImportList/Import_Scroll/VB_ImportList")
 path = NodePath("CanvasLayer/MixBoard/VB/HB_Import/LineEdit_Path/Path")
 volume = NodePath("CanvasLayer/MixBoard/VB/Volume/HSlide_Volume")
+preset_list = NodePath("CanvasLayer/ImportList/Preset_Scroll/VB_PresetList")
+playlist_list = NodePath("CanvasLayer/Playlist/VB_Playlist/Playlist_Scroll/VB_PlaylistContents")
 
 [node name="Importer" type="Node" parent="." unique_id=376679402 node_paths=PackedStringArray("preset_list", "playlist")]
 script = ExtResource("1_pef7k")
