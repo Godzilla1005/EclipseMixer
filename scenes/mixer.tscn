@@ -118,7 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 value = 50.0
 
-[node name="Playlist" type="Control" parent="CanvasLayer" unique_id=1076350065 node_paths=PackedStringArray("audio_player", "elements", "importer", "preset_list")]
+[node name="Playlist" type="Control" parent="CanvasLayer" unique_id=1076350065 node_paths=PackedStringArray("audio_player", "elements", "importer", "preset_list", "currently_playing")]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -134,6 +134,7 @@ elements = NodePath("VB_Playlist/Playlist_Scroll/VB_PlaylistContents")
 importer = NodePath("../../Importer")
 preset = ExtResource("3_5ldx1")
 preset_list = NodePath("../ImportList/Preset_Scroll/VB_PresetList")
+currently_playing = NodePath("VB_Playlist/VB_Current/Playing/Label_Playing")
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="CanvasLayer/Playlist" unique_id=1342304990 node_paths=PackedStringArray("playlist", "audio_player")]
 script = ExtResource("5_5o4dq")
@@ -159,8 +160,44 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 24
 
-[node name="Spacer" type="Control" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=182187118]
+[node name="VB_Current" type="VBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=233424319]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+
+[node name="Label_Title" type="RichTextLabel" parent="CanvasLayer/Playlist/VB_Playlist/VB_Current" unique_id=951786409]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Currently Playing:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Playing" type="Control" parent="CanvasLayer/Playlist/VB_Playlist/VB_Current" unique_id=701937907]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Song_BG" type="ColorRect" parent="CanvasLayer/Playlist/VB_Playlist/VB_Current/Playing" unique_id=838727002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2905531, 0.413609, 0.25753057, 1)
+
+[node name="Label_Playing" type="RichTextLabel" parent="CanvasLayer/Playlist/VB_Playlist/VB_Current/Playing" unique_id=2141652092]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "None"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HB_Playing" type="HBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=1555665742]
 layout_mode = 2
@@ -219,11 +256,11 @@ theme = ExtResource("1_6yyi0")
 text = "Stop"
 
 [node name="Playlist_Scroll" type="ScrollContainer" parent="CanvasLayer/Playlist/VB_Playlist" unique_id=79240564]
-custom_minimum_size = Vector2(0, 580)
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 
 [node name="VB_PlaylistContents" type="VBoxContainer" parent="CanvasLayer/Playlist/VB_Playlist/Playlist_Scroll" unique_id=1806710888]
-custom_minimum_size = Vector2(500, 580)
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 script = ExtResource("7_53krk")
 element_scene = ExtResource("5_jf88f")

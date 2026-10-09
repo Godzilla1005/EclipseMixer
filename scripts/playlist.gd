@@ -15,38 +15,46 @@ enum PlayMode {
 @export var importer: Importer
 @export var preset: PackedScene
 @export var preset_list: Control
+@export var currently_playing: RichTextLabel
 
 ## Playlist Fields
 var playing_index: int = 0
 var playing: bool = false
 var play_mode: PlayMode = PlayMode.NONE
-var current_song: AudioStreamMP3
-var file_access: FileAccess
+var active_element: PlaylistElement
 
 
 ## Play straight through the playlist
 func play():
 	playing = true
 	play_mode = PlayMode.PLAY
-	audio_player.play_song(elements.get_child(0).full_path)
+	active_element = elements.get_child(0)
+	audio_player.play_song(active_element.full_path)
+	set_currently_playing(active_element.element_name.text)
 
 ## Attempt to play a random audio
 func shuffle():
 	playing = true
 	play_mode = PlayMode.SHUFFLE
-	audio_player.play_song(elements.get_child(randi_range(0, elements.get_child_count() - 1)).full_path)
+	active_element = elements.get_child(randi_range(0, elements.get_child_count() - 1))
+	audio_player.play_song(active_element.full_path)
+	set_currently_playing(active_element.element_name.text)
 
 ## Play a single audio file once
 func play_single(element: PlaylistElement):
 	playing = true
 	play_mode = PlayMode.NONE
-	audio_player.play_song(element.full_path)
+	active_element = element
+	audio_player.play_song(active_element.full_path)
+	set_currently_playing(active_element.element_name.text)
 
 ## Stop the currently playing audio
 func stop():
 	audio_player.stop()
 	playing = false
 	play_mode = PlayMode.NONE
+	active_element = null
+	set_currently_playing("None")
 
 ## Tell the playlist to add a new audio file
 func add_to_playlist(file: String, path: String):
@@ -100,13 +108,16 @@ func player_finished() -> void:
 		PlayMode.NONE:
 			return # nothing else to play
 		PlayMode.PLAY:
-			## play the next song in order
+			## play the next element in order
 			playing_index = playing_index + 1 if playing_index < elements.get_child_count() - 1 else 0 # loop to 0 if at the end
-			audio_player.play_song(elements.get_child(playing_index).full_path)
 		PlayMode.SHUFFLE:
-			## select a random song to play
+			## select a random element to play
 			playing_index = randi_range(0, elements.get_child_count() - 1)
-			audio_player.play_song(elements.get_child(playing_index).full_path)
+	
+	## play the new audio
+	active_element = elements.get_child(playing_index)
+	audio_player.play_song(active_element.full_path)
+	set_currently_playing(active_element.element_name.text)
 
 ## Creates a preset with the currently loaded elements
 func save_playlist():
@@ -126,3 +137,7 @@ func save_playlist():
 ## Clear every active element
 func clear_playlist():
 	elements.clear_list()
+
+## Displays the currently playing element's title
+func set_currently_playing(title: String):
+	currently_playing.text = title
